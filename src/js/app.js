@@ -1,3 +1,4 @@
+import { right } from "@popperjs/core";
 import "../style/index.css";
 
 /**
@@ -28,15 +29,34 @@ function render(variables = {}) {
   // if includeCover==false then we reset the cover code without the <img> tag to make the cover transparent.
   let cover = `<div class="cover"><img src="${variables.background}" /></div>`;
   if (variables.includeCover == false) cover = "<div class='cover'></div>";
+  let name = variables.name === null ? "" : variables.name;
+  let lastName = variables.lastName === null ? "Last Name" : variables.lastName;
+  let role = variables.role === null ? "Career" : variables.role;
+  let city = variables.city === null ? "City" : variables.city;
+  let country = variables.country === null ? "Country" : variables.country;
+
+  function getPosition() {
+    const dropdown = document.getElementById("socialMediaPosition");
+    const selectedValue = dropdown.value;
+
+    if (selectedValue === "position-left") {
+      return "position-left";
+    } else if (selectedValue === "position-right") {
+      return "position-right";
+    } else {
+      // Handle default case if needed
+      return "position-right"; // Default to "position-right" if neither left nor right is selected
+    }
+  }
 
   // reset the website body with the new html output
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
             ${cover}
           <img src="${variables.avatarURL}" class="photo" />
-          <h1>Lucy Boilett</h1>
-          <h2>Web Developer</h2>
-          <h3>Miami, USA</h3>
-          <ul class="position-right">
+          <h1>${name + " " + lastName}</h1>
+          <h2>${role}</h2>
+          <h3>${city + " " + country}</h3>
+          <ul class="${getPosition()}">
             <li><a href="https://twitter.com/4geeksacademy"><i class="fab fa-twitter"></i></a></li>
             <li><a href="https://github.com/4geeksacademy"><i class="fab fa-github"></i></a></li>
             <li><a href="https://linkedin.com/school/4geeksacademy"><i class="fab fa-linkedin"></i></a></li>
